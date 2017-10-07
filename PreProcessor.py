@@ -23,7 +23,8 @@ def main(argv):
 
     raw_input_data = pd.read_csv(input_data_path, header=None)
 
-    #TODO clean missing and nulls
+    #clean missing and nulls
+    raw_input_data.dropna(axis=0, how='any')
 
     for column_name in raw_input_data.columns:
         column = raw_input_data[column_name]
