@@ -17,11 +17,6 @@ if len(sys.argv) > 3:
     print(usage)
     sys.exit(1)
 
-@unique
-class ColumnType(IntEnum):
-    REAL = auto()
-    CATEGORICAL = auto()
-
 def main(argv):
     input_data_path = Path(argv[1])
     output_data_path = Path(argv[2])
