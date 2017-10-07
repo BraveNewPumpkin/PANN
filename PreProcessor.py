@@ -1,5 +1,6 @@
 import sys
 import pandas as pd
+from pandas.api.types import is_string_dtype, is_numeric_dtype, is_bool_dtype
 import numpy as np
 from pathlib import Path
 from enum import IntEnum, auto, unique
@@ -29,25 +30,23 @@ def main(argv):
 
     #TODO clean missing and nulls
 
-    for column_name in raw_input_data:
-        column_type = guessColType(raw_input_data, column_name)
-        print(column_type)
+    for column_name in raw_input_data.columns:
+        column = raw_input_data[column_name]
+        if is_numeric_dtype(column):
+            #numericColumnHandler(raw_input_data, column_name)
+            numericColumnHandler(column)
+        elif is_string_dtype(column):
+            stringColumnHandler(column)
+        elif not is_bool_dtype(column):
+            raise TypeError('column is of unhandleable dtype: ', column.dtype)
+
 
     return 0
 
+def numericColumnHandler(column):
+    print('numeric')
 
-def guessColType(raw_input_data, column_name):
-    column_type = None
-    unique_values = raw_input_data[column_name].unique()
-    pprint(unique_values)
-    #print('column: %s -> values: %s' % (column_name, ', '.join(unique_values)))
-    try:
-        for value in unique_values:
-            float(value)
-        column_type = ColumnType.REAL
-    except ValueError:
-        column_type = ColumnType.CATEGORICAL
-
-    return column_type
+def stringColumnHandler(column):
+    print('string')
 
 main(sys.argv)
