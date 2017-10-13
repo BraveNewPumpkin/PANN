@@ -50,10 +50,11 @@ def main(argv):
     #construct dictionary with keys of new column names (indicies starting at 1 past the last index of dataframe)
     # and values of the new encoded columns
     for i in range(0, encoded_array.shape[1]):
-       new_columns_dict[raw_input_data.shape[1] + i + 1] = encoded_array.T[i]
-    pprint(new_columns_dict)
+        column_name = str(raw_input_data.shape[1] + i + 1)
+        column_data = encoded_array.T[i]
+        new_columns_dict[column_name] = column_data
     #add new columns to dataframe
-    raw_input_data.assign(new_columns_dict)
+    raw_input_data = raw_input_data.assign(**new_columns_dict)
 
 #    raw_input_data.to_csv(output_data_path)
 
