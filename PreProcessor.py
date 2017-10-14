@@ -63,10 +63,10 @@ def main(argv):
     data = data.assign(**new_columns_dict)
 
     #add classifier column back on
-    data.assign(classifier=classifier_column)
+    data.insert(loc=data.shape[1], column='classifier', value=classifier_column)
 
     with output_data_path.open(mode='w') as output_data_stream:
-        data.to_csv(output_data_stream, header=None)
+        data.to_csv(output_data_stream)
 
     return 0
 
