@@ -2,7 +2,7 @@ import sys
 import pandas as pd
 from pandas.api.types import is_string_dtype, is_numeric_dtype, is_bool_dtype
 from pathlib import Path
-from sklearn.preprocessing import StandardScaler, OneHotEncoder, LabelEncoder, LabelBinarizer
+from sklearn.preprocessing import StandardScaler, LabelBinarizer
 from pprint import pprint
 
 usage = 'PreProcessor.py /path/to/raw/dataset.csv /path/to/processed/dataset.csv'
