@@ -1,22 +1,22 @@
 import sys
 import numpy as np
 
-usage = 'ebp.py dataset_name 200 2 4 2'
+usage = 'NeuralNetwork.py dataset_name 200 2 4 2'
 
-if len(sys.argv) < 7:
+if len(sys.argv) < 6:
 	print('not enough arguments\n')
 	print(usage)
 	sys.exit(1)
-if len(sys.argv) > 7:
+if len(sys.argv) > 6:
 	print('too many arguments\n')
 	print(usage)
 	sys.exit(1)
 
 training_dataset = argv[1]
-training_data_percentage = int(argv[2])
-max_iterations = int(argv[3])
-no_hidden_layers = int(argv[4])
-hidden_layer_sizes = []
+# training_data_percentage = int(argv[2])
+max_iterations = int(argv[2])
+no_hidden_layers = int(argv[3])
+# hidden_layer_sizes = []
 
 import numpy as np
 
