@@ -1,3 +1,23 @@
+import sys
+import numpy as np
+
+usage = 'ebp.py dataset_name 200 2 4 2'
+
+if len(sys.argv) < 7:
+	print('not enough arguments\n')
+	print(usage)
+	sys.exit(1)
+if len(sys.argv) > 7:
+	print('too many arguments\n')
+	print(usage)
+	sys.exit(1)
+
+training_dataset = argv[1]
+training_data_percentage = int(argv[2])
+max_iterations = int(argv[3])
+no_hidden_layers = int(argv[4])
+hidden_layer_sizes = []
+
 import numpy as np
 
 
@@ -12,15 +32,12 @@ def sigmoid_prime(x):
 	return sigmoid(x) * (1 - sigmoid(x))
 
 
-max_iteration = 3
 learning_rate = 0.5
-inputlayer_neurons = X.shape[1] #number of features in data set
-hiddenlayer_neurons = 3
-output_neurons = 1
+input_neurons = X.shape[1] #number of features in data set
 
-hidden_layer_weights = np.random.uniform(size=(inputlayer_neurons,hiddenlayer_neurons))
-hidden_layer_bias = np.random.uniform(size=(1,hiddenlayer_neurons))
-output_weights = np.random.uniform(size=(hiddenlayer_neurons,output_neurons))
+hidden_layer_weights = np.random.uniform(size=(input_neurons,no_hidden_layers))
+hidden_layer_bias = np.random.uniform(size=(1,no_hidden_layers))
+output_weights = np.random.uniform(size=(no_hidden_layers,output_neurons))
 output_bias = np.random.uniform(size=(1,output_neurons))
 
 for i in range(max_iteration):
