@@ -34,7 +34,7 @@ def main(argv):
 
     data.rename(index=str, columns={data.columns[-1]: 'classifier'}, inplace=True)
 
-   #normalize data
+    #normalize data
     for column_name in data.columns:
         column = data[column_name]
         if is_numeric_dtype(column):
