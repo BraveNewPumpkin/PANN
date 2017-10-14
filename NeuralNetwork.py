@@ -74,9 +74,9 @@ def run_neural_network(X, y, learning_rate, num_input_nodes, num_hidden_layers, 
         hidden_layer_error = d_output.dot(output_weights.T)
         hidden_layer_delta = hidden_layer_error * slope_hidden_layer
         output_weights += hiddenlayer_activations.T.dot(d_output) * learning_rate
-        output_bias += np.sum(d_output, axis=0, keepdims=True) * learning_rate
+        output_bias += np.sum(d_output, axis=0) * learning_rate
         hidden_layer_weights += X.T.dot(hidden_layer_delta) * learning_rate
-        hidden_layer_bias += np.sum(hidden_layer_delta, axis=0, keepdims=True) * learning_rate
+        hidden_layer_bias += np.sum(hidden_layer_delta, axis=0) * learning_rate
 
         print("Weights for EPOCH: ", i + 1)
         print(hidden_layer_weights)
