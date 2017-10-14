@@ -53,7 +53,7 @@ def main(argv):
             raise TypeError('column is of unhandleable dtype: ', column.dtype)
 
     with output_data_path.open(mode='w') as output_data_stream:
-        data.to_csv(output_data_stream)#, header=None)
+        data.to_csv(output_data_stream, index=False)#, header=None)
 
     return 0
 
