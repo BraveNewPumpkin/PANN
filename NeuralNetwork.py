@@ -20,6 +20,8 @@ hidden_layer_sizes = []
 
 import numpy as np
 
+names = data.columns.str.extract('(classifier=.*)', expand=True).dropna()
+pprint(names.shape)
 
 X=np.array([[1,0,1,0],[1,0,1,1],[0,1,0,1]])
 

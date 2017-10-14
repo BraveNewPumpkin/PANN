@@ -1,5 +1,6 @@
 import sys
 import pandas as pd
+import numpy as np
 from pandas.api.types import is_string_dtype, is_numeric_dtype, is_bool_dtype
 from pathlib import Path
 from sklearn.preprocessing import StandardScaler, LabelBinarizer
@@ -22,8 +23,11 @@ def main(argv):
 
     data = pd.read_csv(input_data_path, header=None)
 
-    #clean missing and nulls
-    data.dropna(axis=0, how='any')
+    #clean missing and nulls and '?'s
+    print(data.shape)
+    data.replace(to_replace=[r'\s*\?\s*'], value=[np.nan], regex=True, inplace=True)
+    data.dropna(axis=0, how='any', inplace=True)
+    print(data.shape)
 
     standard_scaler = StandardScaler()
     label_binarizer = LabelBinarizer()
