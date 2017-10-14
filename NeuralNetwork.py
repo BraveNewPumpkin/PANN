@@ -44,6 +44,7 @@ def main(argv):
                        )
 
 
+
 class NeuralNetwork:
 
     def __init__(self):
@@ -59,29 +60,34 @@ class NeuralNetwork:
     def sigmoid_prime(self, x):
         return self.sigmoid(x) * (1 - self.sigmoid(x))
 
+    def forward_propigation(self, X):
+        hidden_layer_input = np.dot(X, self.hidden_layer_weights)
+        hidden_layer_input = hidden_layer_input + self.hidden_layer_bias
+        hidden_layer_activations = self.sigmoid(hidden_layer_input)
+        output_layer_input = np.dot(hidden_layer_activations, self.output_weights)
+        output_layer_input = output_layer_input + self.output_bias
+        output = self.sigmoid(output_layer_input)
+        return output, hidden_layer_activations
+
     def train(self, X, y, learning_rate, num_input_nodes, num_hidden_layers, num_output_nodes, max_iterations):
         self.hidden_layer_weights = np.random.uniform(size=(num_input_nodes, num_hidden_layers))
         self.hidden_layer_bias = np.random.uniform(size=(1, num_hidden_layers))
         self.output_weights = np.random.uniform(size=(num_hidden_layers, num_output_nodes))
         self.output_bias = np.random.uniform(size=(1, num_output_nodes))
 
+        (output, hidden_layer_activations) = self.forward_propigation(X)
+
         for i in range(max_iterations):
             # Forward Propogation
-            hidden_layer_input1 = np.dot(X, self.hidden_layer_weights)
-            hidden_layer_input = hidden_layer_input1 + self.hidden_layer_bias
-            hiddenlayer_activations = self.sigmoid(hidden_layer_input)
-            output_layer_input1 = np.dot(hiddenlayer_activations, self.output_weights)
-            output_layer_input = output_layer_input1 + self.output_bias
-            output = self.sigmoid(output_layer_input)
 
             # Backpropagation
             E = y - output
             slope_output_layer = self.sigmoid_prime(output)
-            slope_hidden_layer = self.sigmoid_prime(hiddenlayer_activations)
+            slope_hidden_layer = self.sigmoid_prime(hidden_layer_activations)
             d_output = E * slope_output_layer
             hidden_layer_error = d_output.dot(self.output_weights.T)
             hidden_layer_delta = hidden_layer_error * slope_hidden_layer
-            self.output_weights += hiddenlayer_activations.T.dot(d_output) * learning_rate
+            self.output_weights += hidden_layer_activations.T.dot(d_output) * learning_rate
             self.output_bias += np.sum(d_output, axis=0) * learning_rate
             self.hidden_layer_weights += X.T.dot(hidden_layer_delta) * learning_rate
             self.hidden_layer_bias += np.sum(hidden_layer_delta, axis=0) * learning_rate
@@ -91,5 +97,9 @@ class NeuralNetwork:
 
         print("OUTPUTS")
         print(output)
+
+    def classify(self, X):
+        (output, hidden_layer_activations) = self.forward_propigation(X)
+        return output
 
 main(sys.argv)
