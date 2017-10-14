@@ -25,17 +25,22 @@ def main(argv):
 
     data = pd.read_csv(training_dataset_path)
 
-    names = data.columns.str.extract('(classifier=.*)', expand=False).dropna()
+    percent_data_for_test = 0.25
+    (training_data, testing_data) = split_train_and_test(data=data, percent_data_for_test=percent_data_for_test)
 
-    X = data.drop(names, axis=1)
-    y = data[names]
+    names = training_data.columns.str.extract('(classifier=.*)', expand=False).dropna()
 
-    num_input_nodes = X.shape[1]  # number of features in data set
-    num_output_nodes = y.shape[1]
+    x_train = training_data.drop(names, axis=1)
+    y_train = training_data[names]
+    x_test = testing_data.drop(names, axis=1)
+    y_test = testing_data[names]
+
+    num_input_nodes = x_train.shape[1]  # number of features in data set
+    num_output_nodes = y_train.shape[1]
 
     neural_netork = NeuralNetwork()
-    neural_netork.train(X=X,
-                       y=y,
+    neural_netork.train(X=x_train,
+                       y=y_train,
                        learning_rate=0.5,
                        num_input_nodes=num_input_nodes,
                        num_hidden_layers=num_hidden_layers,
@@ -43,7 +48,12 @@ def main(argv):
                        max_iterations=max_iterations
                        )
 
-
+def split_train_and_test(data, percent_data_for_test):
+    num_rows_for_test = round(data.shape[0] * percent_data_for_test)
+    test_row_indexes = np.random.randint(low=0, high=data.shape[0], size=num_rows_for_test)
+    testing_data = data.iloc(test_row_indexes)
+    training_data = data.drop(data.index[test_row_indexes])
+    return training_data, testing_data
 
 class NeuralNetwork:
 
