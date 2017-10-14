@@ -24,10 +24,8 @@ def main(argv):
     data = pd.read_csv(input_data_path, header=None)
 
     #clean missing and nulls and '?'s
-    print(data.shape)
     data.replace(to_replace=[r'\s*\?\s*'], value=[np.nan], regex=True, inplace=True)
     data.dropna(axis=0, how='any', inplace=True)
-    print(data.shape)
 
     standard_scaler = StandardScaler()
     label_binarizer = LabelBinarizer()
