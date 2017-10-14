@@ -25,16 +25,13 @@ def main(argv):
 
     data = pd.read_csv(training_dataset_path)
 
-    names = data.columns.str.extract('(classifier=.*)', expand=True).dropna()
-    pprint(names.shape)
+    names = data.columns.str.extract('(classifier=.*)', expand=False).dropna()
 
-    X = data[names]
-    pprint(X)
-    y = np.array([[1], [1], [0]])
+    X = data.drop(names, axis=1)
+    y = data[names]
 
     num_input_nodes = X.shape[1]  # number of features in data set
     num_output_nodes = y.shape[1]
-    sys.exit(0)
 
     run_neural_network(X=X,
                        y=y,
