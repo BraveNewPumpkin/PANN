@@ -42,6 +42,7 @@ def main(argv):
         num_input_nodes=num_input_nodes,
         num_hidden_layers=num_hidden_layers,
         num_output_nodes=num_output_nodes,
+        hidden_layer_sizes=hidden_layer_sizes,
         max_iterations=max_iterations
         )
     raw_test_output = neural_network.classify(x_test)
@@ -71,8 +72,6 @@ def main(argv):
     print('error: %f%%' % (num_correctly_classified / y_test.shape[0]))
 
 
-
-
 def split_train_and_test(data, percent_data_for_test):
     num_rows_for_test = round(data.shape[0] * percent_data_for_test)
     test_row_indexes = np.random.randint(low=0, high=data.shape[0], size=num_rows_for_test)
@@ -87,7 +86,6 @@ class NeuralNetwork:
         self.hidden_layer_bias = None
         self.output_weights = None
         self.output_bias = None
-
 
     def sigmoid(self, x):
         return 1 / (1 + np.exp(-x))
@@ -104,7 +102,7 @@ class NeuralNetwork:
         output = self.sigmoid(output_layer_input)
         return output, hidden_layer_activations
 
-    def train(self, x, y, learning_rate, num_input_nodes, num_hidden_layers, num_output_nodes, max_iterations):
+    def train(self, x, y, learning_rate, num_input_nodes, num_hidden_layers, num_output_nodes, hidden_layer_sizes, max_iterations):
         self.hidden_layer_weights = np.random.uniform(size=(num_input_nodes, num_hidden_layers))
         self.hidden_layer_bias = np.random.uniform(size=(1, num_hidden_layers))
         self.output_weights = np.random.uniform(size=(num_hidden_layers, num_output_nodes))
