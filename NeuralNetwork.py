@@ -66,7 +66,7 @@ def main(argv):
         if row_matches:
 #            print('y_test: ', y_test.iloc[row_num, :].as_matrix(), ' == test_output: ', test_output.iloc[row_num, :].as_matrix())
             num_correctly_classified += 1
-    print('error: %f%%' % (1 - num_correctly_classified / y_test.shape[0]))
+    print('error: %f%%' % ((1 - num_correctly_classified / y_test.shape[0]) * 100))
 
 
 def split_train_and_test(data, percent_data_for_test):
