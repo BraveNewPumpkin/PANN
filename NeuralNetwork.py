@@ -53,9 +53,7 @@ def main(argv):
     #pprint(merged.shape)
 
     num_correctly_classified = 0
-    print(y_test.shape)
     for row_num in range(0, y_test.shape[0]):
-        print('index: ', row_num)
         y_test_row = y_test.iloc[row_num, :]
         test_output_row = test_output.iloc[row_num, :]
         row_matches = None
@@ -68,7 +66,6 @@ def main(argv):
         if row_matches:
 #            print('y_test: ', y_test.iloc[row_num, :].as_matrix(), ' == test_output: ', test_output.iloc[row_num, :].as_matrix())
             num_correctly_classified += 1
-
     print('error: %f%%' % (num_correctly_classified / y_test.shape[0]))
 
 
